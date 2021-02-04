@@ -21,7 +21,7 @@ class MyScene extends Phaser.Scene {
     
     preload() {
         // Load an image and call it 'logo'.
-        this.load.image( 'logo', 'phaser.png' );
+        this.load.image( 'logo', 'assets/monkey-d-luffy.png' );
     }
     
     create() {
@@ -40,8 +40,7 @@ class MyScene extends Phaser.Scene {
         // Add some text using a CSS style.
         // Center it in X, and position its top 15 pixels from the top of the world.
         let style = { font: "25px Verdana", fill: "#9999ff", align: "center" };
-        let text = this.add.text( this.cameras.main.centerX, 15, "Hello, Jasmine", style );
-        text.setOrigin( 0.5, 0.0 );
+        let text = this.add.text( this.cameras.main.centerX, 15, "Hello, Jasmine", style ); text.setOrigin( 0.5, 0.0 );
     }
     
     update() {
