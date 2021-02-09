@@ -35,8 +35,8 @@ class MyScene extends Phaser.Scene {
             this.x = pointer.x;
             this.y = pointer.y;
         }, this);
-        }
     }
+    
     
     update(time, delta) {
       this.move += delta;
