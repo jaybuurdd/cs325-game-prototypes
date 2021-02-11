@@ -21,10 +21,9 @@ class MyScene extends Phaser.Scene {
         this.move = 0;
         this.x = 0;
         this.y = 0;
-
+    
         var sprites = [];
-       // var circ;    
-        //const game = new Phaser.Game(game);
+   
     }
     
     
@@ -43,10 +42,8 @@ class MyScene extends Phaser.Scene {
         //var rock6 = this.add.sprite(300, 300, 'rock');
         const text = this.add.text(350, 250, '', { font: '24px Courier', fill: '#00ff00' });
        
-        
-
         this.cameras.main.once('camerafadeincomplete', function (camera) {
-            camera.fadeOut(60000);
+            camera.fadeOut(90000);
         });
 
         this.cameras.main.fadeIn(6000);
@@ -57,10 +54,6 @@ class MyScene extends Phaser.Scene {
         Phaser.Display.Align.In.Center(sword, bg)
         
 
-        //rock6 = this.physics.add.image(pos.x, pos.y, 'rock');
-        //rock6.setBounce(1).setCollideWorldBounds(true);
-        //Phaser.Math.RandomXY(rock6.body.velocity, 1);
-        //sprites.push(rock6);
 
         var pos = Phaser.Geom.Rectangle.Random(this.physics.world.bounds);
             
@@ -106,7 +99,7 @@ class MyScene extends Phaser.Scene {
             }
         });
 
-        //  Change the 'value' property when the mouse is clicked
+        //Change the 'value' property when the mouse is clicked
         this.input.on('pointerdown', function () {
             rock6.data.values.point += 100;
         });///////////////////////////////
