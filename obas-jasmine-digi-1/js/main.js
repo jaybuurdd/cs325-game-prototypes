@@ -1,4 +1,5 @@
 import "./phaser.js";
+import { Phaser } from "./phaser.js";
 
 // You can copy-and-paste the code from any of the examples at https://examples.phaser.io here.
 // You will need to change the `parent` parameter passed to `new Phaser.Game()` from
@@ -13,6 +14,7 @@ import "./phaser.js";
 
 class MyScene extends Phaser.Scene {
     
+
     constructor() 
     {
         super();
@@ -28,14 +30,22 @@ class MyScene extends Phaser.Scene {
     }
     
     create() {
-        this.add.image(0, 0, 'background')
-            .setOrigin(0);
+        //set background size to fit gaming window
+        const back_img = this.add.image(0, 0, 'background');
+        
+        //Center the picture in game
+        Phaser.Display.Align.In.Center(back_img, this.add.zone(400,300,800,600));
+        
+        //sword
         this.group = this.add.group({key: 'sword', frameQuantity: 128});
         this.input.on('pointermove', function (pointer){
             this.x = pointer.x;
             this.y = pointer.y;
         }, this);
+
+   
     }
+    
     
     
     update(time, delta) {
@@ -48,6 +58,7 @@ class MyScene extends Phaser.Scene {
 
     }
 }
+    
 
 const game = new Phaser.Game({
     type: Phaser.AUTO,
