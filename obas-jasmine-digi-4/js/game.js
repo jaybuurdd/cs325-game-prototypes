@@ -1,8 +1,16 @@
+/*
+Jumper game with a character that's dodgin a laser shooting eyeball.
+TO DO:
+switch assets
+code collision (user DA2 code)
+code jumping physics for character (challenging part?)
+*/
+
+
 var config = {
-  type: Phaser.CANVAS,
+  type: Phaser.AUTO,
   width: 800,
   height: 600,
-  parent: 'phaser-example',
   backgroundColor: '#9adaea',
   useTicker: true,
   scene: {
@@ -12,19 +20,17 @@ var config = {
   }
 };
 
-var bullet1;
-var bullet2;
+var bullet;
+var speed;
 
-var speed1;
-var speed2;
 
 var game = new Phaser.Game(config);
 
 function preload ()
 {
-  this.load.image('bullet', 'assets/tests/timer/bullet-bill.png');
-  this.load.image('cannon', 'assets/tests/timer/cannon.png');
-  this.load.image('ground', 'assets/tests/timer/ground.png');
+  this.load.image('bullet', 'assets/adventurer-attack1-00.png');
+  this.load.image('cannon', 'assets/flying-eyeball.png');
+  this.load.image('ground', 'assets/Tileset_Surface.png');
 }
 
 function create ()
@@ -33,9 +39,9 @@ function create ()
 
   this.add.image(0, 200, 'ground').setOrigin(0);
 
-  bullet1 = this.add.image(64, 76, 'bullet').setOrigin(0);
+  bullet = this.add.image(64, 76, 'bullet').setOrigin(0);
 
-  speed1 = Phaser.Math.GetSpeed(600, 6);
+  speed = Phaser.Math.GetSpeed(600, 6);
 
   this.add.image(64, 72, 'cannon').setOrigin(0);
 
@@ -43,15 +49,7 @@ function create ()
 
   //   Bullet 2 (600px in 3 seconds)
 
-  this.add.image(0, 500, 'ground').setOrigin(0);
 
-  bullet2 = this.add.image(64, 376, 'bullet').setOrigin(0);
-
-  speed2 = Phaser.Math.GetSpeed(600, 3);
-
-  this.add.image(64, 500, 'cannon').setOrigin(0, 1);
-
-  this.add.text(64, 350, '600px / 3 secs', { fill: '#000' });
 }
 
 //  The update function is passed 2 values:
@@ -60,17 +58,12 @@ function create ()
 
 function update (time, delta)
 {
-  bullet1.x += speed1 * delta;
+  bullet.x += speed * delta;
 
-  if (bullet1.x > 864)
+  if (bullet.x > 864)
   {
-      bullet1.x = 64;
+      bullet.x = 64;
   }
 
-  bullet2.x += speed2 * delta;
 
-  if (bullet2.x > 864)
-  {
-      bullet2.x = 64;
-  }
 }
