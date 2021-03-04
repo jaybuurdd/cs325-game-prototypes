@@ -1,150 +1,76 @@
-
-
-
-// create a new scene named "Game"
-let gameScene = new Phaser.Scene('Game');
-
-// some parameters for our scene (our own customer variables - these are NOT part of the Phaser API)
-gameScene.init = function() {
-  this.playerSpeed = 2.5;
-  this.enemyMaxY = 280;
-  this.enemyMinY = 80;
-};
-  
-// load asset files for our game
-gameScene.preload = function() {
- 
-  // load images
-  this.load.image('background', 'assets/grass-battle.png');
-  this.load.image('player', 'assets/Owlet_Monster.png');
-  this.load.image('man', 'assets/Man.png');
-  this.load.image('woman', 'assets/Woman.png');
-  this.load.image('girl', 'assets/Girl.png');
-  this.load.image('boy', 'assets/Boy.png');
-  this.load.image('rock', 'assets/Rock2.png');
-  
-};
- 
-// executed once, after assets were loaded
-gameScene.create = function() {
- 
-   // background
-  let bg = this.add.sprite(0, 0, 'background');
-  // change origin to the top-left of the sprite
-  bg.setOrigin(0,0);
- 
-
-  // player
-  this.player = this.add.sprite(40, this.sys.game.config.height / 2, 'player');
-  // scale down
-  this.player.setScale(1.0);
-
-  // goal
-  this.rock = this.add.sprite(this.sys.game.config.width - 80, this.sys.game.config.height / 2, 'rock');
-  this.rock.setScale(1.0);
-
-  // group of enemies
-  this.enemies = this.add.group({
-    key: 'man',
-    repeat: 4,
-    setXY: {
-      x: 250,
-      y: 200,
-      stepX: 100,
-      stepY: 20
-    }
-    
-  });
-
-  // scale enemies
-  Phaser.Actions.ScaleXY(this.enemies.getChildren(), 1.0, 1.0);
-
-  // set speeds
-  Phaser.Actions.Call(this.enemies.getChildren(), function(enemy) {
-    enemy.speed = Math.random() * 2 + 1;
-  }, this);
-
-  
-  // player is alive
-  this.isPlayerAlive = true;
-
-// reset camera effects
-this.cameras.main.resetFX();
-  
-};
-
-// executed on every frame (60 times per second)
-gameScene.update = function() {
- 
-  // only if the player is alive
-  if (!this.isPlayerAlive) {
-    return;
+var config = {
+  type: Phaser.CANVAS,
+  width: 800,
+  height: 600,
+  parent: 'phaser-example',
+  backgroundColor: '#9adaea',
+  useTicker: true,
+  scene: {
+      preload: preload,
+      create: create,
+      update: update
   }
-  // check for active input
-  if (this.input.activePointer.isDown) {
- 
-    // player walks
-    this.player.x += this.playerSpeed;
+};
+
+var bullet1;
+var bullet2;
+
+var speed1;
+var speed2;
+
+var game = new Phaser.Game(config);
+
+function preload ()
+{
+  this.load.image('bullet', 'assets/tests/timer/bullet-bill.png');
+  this.load.image('cannon', 'assets/tests/timer/cannon.png');
+  this.load.image('ground', 'assets/tests/timer/ground.png');
+}
+
+function create ()
+{
+  //   Bullet 1 (600px in 6 seconds)
+
+  this.add.image(0, 200, 'ground').setOrigin(0);
+
+  bullet1 = this.add.image(64, 76, 'bullet').setOrigin(0);
+
+  speed1 = Phaser.Math.GetSpeed(600, 6);
+
+  this.add.image(64, 72, 'cannon').setOrigin(0);
+
+  this.add.text(64, 50, '600px / 6 secs', { fill: '#000' });
+
+  //   Bullet 2 (600px in 3 seconds)
+
+  this.add.image(0, 500, 'ground').setOrigin(0);
+
+  bullet2 = this.add.image(64, 376, 'bullet').setOrigin(0);
+
+  speed2 = Phaser.Math.GetSpeed(600, 3);
+
+  this.add.image(64, 500, 'cannon').setOrigin(0, 1);
+
+  this.add.text(64, 350, '600px / 3 secs', { fill: '#000' });
+}
+
+//  The update function is passed 2 values:
+//  The current time (in ms)
+//  And the delta time, which is derived from the elapsed time since the last frame, with some smoothing and range clamping applied
+
+function update (time, delta)
+{
+  bullet1.x += speed1 * delta;
+
+  if (bullet1.x > 864)
+  {
+      bullet1.x = 64;
   }
 
-    // treasure collision
-  if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), this.rock.getBounds())) {
-    this.gameOver();
-    }
+  bullet2.x += speed2 * delta;
 
-  // enemy movement
-  let enemies = this.enemies.getChildren();
-  let numEnemies = enemies.length;
- 
-  for (let i = 0; i < numEnemies; i++) {
- 
-    // move enemies
-    enemies[i].y += enemies[i].speed;
- 
-    // reverse movement if reached the edges
-    if (enemies[i].y >= this.enemyMaxY && enemies[i].speed > 0) {
-      enemies[i].speed *= -1;
-    } else if (enemies[i].y <= this.enemyMinY && enemies[i].speed < 0) {
-      enemies[i].speed *= -1;
-    }
-    // enemy collision
-    if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemies[i].getBounds())) {
-      this.gameOver();
-      break;
-    }
+  if (bullet2.x > 864)
+  {
+      bullet2.x = 64;
   }
-
-      
-};
-
-//game over method to end the game
-gameScene.gameOver = function() {
- 
-  // flag to set player is dead
-  this.isPlayerAlive = false;
- 
-  // shake the camera
-  this.cameras.main.shake(500);
- 
-  // fade camera
-  this.time.delayedCall(250, function() {
-    this.cameras.main.fade(250);
-  }, [], this);
- 
-  // restart game
-  this.time.delayedCall(500, function() {
-    this.scene.restart();
-  }, [], this);
- 
-  
-};
-// our game's configuration
-let config = {
-  type: Phaser.AUTO,  //Phaser will decide how to render our game (WebGL or Canvas)
-  width: 800, // game width
-  height: 600, // game height
-  scene: gameScene // our newly created scene
-};
-
-// create the game, and pass it the configuration
-let game = new Phaser.Game(config);
+}
