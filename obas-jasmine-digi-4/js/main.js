@@ -27,6 +27,7 @@ var rightKeyDebug;
 var upKeyDebug;
 var downKeyDebug;
 
+
 var game = new Phaser.Game(config);
 
 
@@ -62,6 +63,8 @@ function create ()
   blast = this.add.image(64, 455, 'blast').setOrigin(0);
   blast.flipX=true;
   speed = Phaser.Math.GetSpeed(600, 3);
+  // coin image used as tileset
+  
   
   this.add.image(0, 580, 'ground').setOrigin(0);
   this.add.image(100, 580, 'ground').setOrigin(0);
@@ -76,11 +79,12 @@ function create ()
   upKeyDebug = this.add.text(300, 10);
   downKeyDebug = this.add.text(300, 530);
 
-  
+  //scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+  //this.physics.add.overlap(player, blast);
   // player is alive
   this.isPlayerAlive = true;
 
-  // reset camera effects
+ // reset camera effects
   this.cameras.main.resetFX();
  
   
@@ -103,7 +107,7 @@ function update (time, delta)
   {
       blast.x = 64;
   }
-  
+
   player.setVelocity(0);
 
   if (cursors.left.isDown)
@@ -127,26 +131,5 @@ function update (time, delta)
 }
 
 
-  //game over method to end the game
-//gameScene.gameOver = function() 
-gameScene.gameOver = function() {
  
-  // flag to set player is dead
-  this.isPlayerAlive = false;
- 
-  // shake the camera
-  this.cameras.main.shake(500);
- 
-  // fade camera
-  this.time.delayedCall(250, function() {
-    this.cameras.main.fade(250);
-  }, this);
- 
-  // restart game
-  this.time.delayedCall(500, function() {
-    this.scene.restart();
-  }, this);
- 
-  
-}
 

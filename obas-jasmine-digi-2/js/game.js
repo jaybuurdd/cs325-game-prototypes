@@ -68,9 +68,12 @@ gameScene.create = function() {
   // player is alive
   this.isPlayerAlive = true;
 
-// reset camera effects
-this.cameras.main.resetFX();
-  
+  // reset camera effects
+  this.cameras.main.resetFX();
+  // make the camera follow the player
+  this.cameras.main.startFollow(player)
+
+  this.physics.add.collider(blast, player);
 };
 
 // executed on every frame (60 times per second)
@@ -107,11 +110,7 @@ gameScene.update = function() {
     } else if (enemies[i].y <= this.enemyMinY && enemies[i].speed < 0) {
       enemies[i].speed *= -1;
     }
-    // enemy collision
-    if (Phaser.Geom.Intersects.RectangleToRectangle(this.player.getBounds(), enemies[i].getBounds())) {
-      this.gameOver();
-      break;
-    }
+   
   }
 
       
