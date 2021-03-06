@@ -79,6 +79,8 @@ function create ()
   upKeyDebug = this.add.text(300, 10);
   downKeyDebug = this.add.text(300, 530);
 
+  
+
   //scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
   //this.physics.add.overlap(player, blast);
   // player is alive
