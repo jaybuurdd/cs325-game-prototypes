@@ -37,12 +37,15 @@ function preload ()
   this.load.image('blast', 'assets/eye-ball-blast.png');
   this.load.image('enemy', 'assets/evil-eye-ball.png');
   this.load.image('ground', 'assets/ground_mossy.png');
-  //this.load.image('sky', 'assets/BGFront.png');
   this.load.image('background', 'assets/CloudsBack.png');
+  this.load.audio("blast_sound", 'assets/laster-blast.wav')
+  this.load.audio("sound", 'assets/nature.wav')
 }
 
 function create ()
 {
+  const sound = this.sound.add("sound");
+  sound.play(); 
   cursors = this.input.keyboard.createCursorKeys();
 
   // create the player sprite    
@@ -61,8 +64,6 @@ function create ()
 
   // eyeball blast (enemy attack)
   blast = this.add.image(64, 455, 'blast').setOrigin(0);
-  blast1 = this.add.image(64, 455, 'blast').setOrigin(0);
-  blast2 = this.add.image(64, 455, 'blast').setOrigin(0);
   blast.flipX=true;
   speed = Phaser.Math.GetSpeed(600, 3);
   // coin image used as tileset
@@ -106,6 +107,7 @@ function update (time, delta)
   if (!this.isPlayerAlive) {
       return;
   }
+
   blast.x += speed * delta;
 
   if (blast.x > 864)
