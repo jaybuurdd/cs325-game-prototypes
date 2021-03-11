@@ -33,19 +33,24 @@ class MyScene extends Phaser.Scene {
         this.load.image('sword', 'assets/sword_spin.gif' )
         this.load.image('rock', 'assets/rock.png')
         this.load.image('rock-off', 'assets/rock1.png')
+
+        this.load.audio('sound', 'assets/adventure.wav')
     }
     
     create() {
-
+        
+        const sound = this.sound.add("sound");
+        sound.play();
         const bg = this.add.image(0, 0, 'background');
         const sword = this.add.image(0, 0, 'sword');
         //var rock6 = this.add.sprite(300, 300, 'rock');
         const text = this.add.text(350, 250, '', { font: '24px Courier', fill: '#00ff00' });
-       
+        
+
         this.cameras.main.once('camerafadeincomplete', function (camera) {
             camera.fadeOut(90000);
         });
-
+        
         this.cameras.main.fadeIn(6000);
         //  Center the picture in the game
         Phaser.Display.Align.In.Center(bg, this.add.zone(400, 300, 800, 600));
@@ -53,7 +58,7 @@ class MyScene extends Phaser.Scene {
         //  Center the sprite to the picture
         Phaser.Display.Align.In.Center(sword, bg)
         
-
+    
 
         var pos = Phaser.Geom.Rectangle.Random(this.physics.world.bounds);
             
@@ -65,7 +70,7 @@ class MyScene extends Phaser.Scene {
         var block5 = this.physics.add.image(pos.x, pos.y, 'rock-off');
         var rock6 = this.physics.add.image(pos.x, pos.y, 'rock-off');
             
-        
+
         //const rock6 = this.add.image(300, 300, 'rock6');
 
         //  Store some data about this rock6:
@@ -102,6 +107,8 @@ class MyScene extends Phaser.Scene {
         //Change the 'value' property when the mouse is clicked
         this.input.on('pointerdown', function () {
             rock6.data.values.point += 100;
+            
+
         });///////////////////////////////
 
             block.setBounce(1).setCollideWorldBounds(true);
@@ -112,13 +119,13 @@ class MyScene extends Phaser.Scene {
             block5.setBounce(1).setCollideWorldBounds(true);
             rock6.setBounce(1).setCollideWorldBounds(true);
     
-            Phaser.Math.RandomXY(block.body.velocity, 900);
-            Phaser.Math.RandomXY(block1.body.velocity, 900);
-            Phaser.Math.RandomXY(block2.body.velocity, 900);
-            Phaser.Math.RandomXY(block3.body.velocity, 900);
-            Phaser.Math.RandomXY(block4.body.velocity, 900);
-            Phaser.Math.RandomXY(block5.body.velocity, 900);
-            Phaser.Math.RandomXY(rock6.body.velocity, 900);
+            Phaser.Math.RandomXY(block.body.velocity, 500);
+            Phaser.Math.RandomXY(block1.body.velocity, 500);
+            Phaser.Math.RandomXY(block2.body.velocity, 500);
+            Phaser.Math.RandomXY(block3.body.velocity, 500);
+            Phaser.Math.RandomXY(block4.body.velocity, 500);
+            Phaser.Math.RandomXY(block5.body.velocity, 500);
+            Phaser.Math.RandomXY(rock6.body.velocity, 500);
     
             sprites.push(block);
             sprites.push(block1);
@@ -128,10 +135,13 @@ class MyScene extends Phaser.Scene {
             sprites.push(block5);
             sprites.push(rock6);
 
-            
+
         
     }
-   
+    
+    update(){
+        
+    }  
 
 
 }

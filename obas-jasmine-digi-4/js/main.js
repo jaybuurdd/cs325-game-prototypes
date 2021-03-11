@@ -61,6 +61,8 @@ function create ()
 
   // eyeball blast (enemy attack)
   blast = this.add.image(64, 455, 'blast').setOrigin(0);
+  blast1 = this.add.image(64, 455, 'blast').setOrigin(0);
+  blast2 = this.add.image(64, 455, 'blast').setOrigin(0);
   blast.flipX=true;
   speed = Phaser.Math.GetSpeed(600, 3);
   // coin image used as tileset
@@ -88,7 +90,8 @@ function create ()
 
  // reset camera effects
   this.cameras.main.resetFX();
- 
+  
+  this.physics.add.collider(blast, player);
   
 }
 
