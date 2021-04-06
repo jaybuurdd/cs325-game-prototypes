@@ -38,12 +38,16 @@ function preload(){
   this.load.image('sky','assets/night-sky.png');
   this.load.image('bird', 'assets/bird.png');
   this.load.image('pipe', 'assets/pipe.png');
+  this.load.audio('music', 'assets/bensound-extremeaction.mp3');
 }
 
 function create(){
+  const music = this.sound.add("music");
+  music.play(); 
   this.add.image(0, 0, 'sky').setOrigin(0);
   bird = this.physics.add.sprite(initialBirdPosition.x, initialBirdPosition.y, 'bird').setOrigin(0);
-  bird.body.gravity.y = 400;
+  bird.flipX=true;
+  bird.body.gravity.y = 500;
 
   pipes = this.physics.add.group();
 
@@ -83,8 +87,8 @@ function placePipe(uPipe, lPipe){
   lPipe.x = uPipe.x;
   lPipe.y = uPipe.y + pipeVerticalDistance;
 
-  lPipe.body.velocity.x = -200;
-  uPipe.body.velocity.x = -200;
+  lPipe.body.velocity.x = -450;
+  uPipe.body.velocity.x = -450;
 
 }
 
