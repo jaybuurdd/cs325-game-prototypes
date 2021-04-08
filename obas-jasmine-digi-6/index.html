@@ -18,6 +18,7 @@ body
 </head>
 
 <body>
+<bgsound src="assets/bensound-extremeaction.mp3" />
 <div id="game"></div>
 <div id="readme">
 
@@ -130,9 +131,12 @@ How long does your game take to play?
 </li>
 
 <h2>INSTRUCTIONS: Move character with the click of your mouse! </h2>
-    
+
+  
+
 <!-- main.js must come at the end since it expects the HTML to have been created. -->
 <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.js"></script>
-<script src="js/flappy.js"></script>
+<script type="module" src="js/scenes/PlayScene.js"></script>
+<script type="module" src="js/flappy.js"></script>
 </body>
 </html>
